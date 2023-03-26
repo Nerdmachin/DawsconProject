@@ -1,5 +1,6 @@
 #My imports
 import matplotlib.pyplot as plt
+import matplotlib as mpl
 import seaborn as sns
 import pandas as pd
 
@@ -19,19 +20,11 @@ noSafeWaterPlot = WaterContaminationSrc[
     &
     (WaterContaminationSrc["Year"] >= 2009)]
 
+
 #Create the 1st graph + the left side Y Axis (Water Consumption)
-plt.style.use("seaborn-v0_8-bright")
-fig, axs = plt.subplots()
-lithiumGraph = sns.lineplot(
-    data=lithium_plot,
-    x="Year",
-    y="Lithium Production-Reserves",
-    hue="Entity",
-    ax=axs,
-    color='white')
-lithiumGraph.set(
-    title="Graph representing lithium production and water contamination over the years",
-    ylabel="Amount of people without access to water")
+plt.style.use("dark_background")
+mpl.rcParams["axes.facecolor"] = "#271a0c"
+fig, axs = plt.subplots(figsize=(11.7, 8.27))
 
 # Add second y-axis for Lithium Production data
 ax2 = axs.twinx()
@@ -41,7 +34,7 @@ lithiumGraph2 = sns.lineplot(
     y="Lithium Production-Reserves",
     # hue="Entity",
     ax=ax2,
-    color='green',
+    color='#cca300',
     linestyle='--')
 lithiumGraph2.set(
     ylabel="Lithium Production (tons)"
@@ -51,18 +44,21 @@ waterGraph = sns.lineplot(
     data=noSafeWaterPlot,
     x="Year",
     y="wat_sm_number_without",
-    color='red',
+    color='#d9d9d9',
     ax=axs,
     legend=False)
+waterGraph.set(
+    ylabel="Amount of people without water"
+)
 
 # Add legend and titles
 axs.legend(
     ["Water accesibility","Lithium Production"],
     loc="upper left")  # Add legend for Lithium Production data
 waterGraph.set(title="Chile's lack of access to clean water over the years")
-axs.get_legend().legend_handles[0].set_color('red')
-axs.get_legend().legend_handles[1].set_linestyle('--')
-axs.get_legend().legend_handles[1].set_color('green')
+axs.get_legend().legend_handles[0].set_color('#d9d9d9')
+# axs.get_legend().legend_handles[1].set_linestyle('--')
+axs.get_legend().legend_handles[1].set_color('#cca300')
 
 # Display plot
 plt.show()
